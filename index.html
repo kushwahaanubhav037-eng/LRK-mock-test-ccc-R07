@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCC Mock Test | LRK Computer Institute</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --red: #ff0000; --dark: #050505; }
+        body { 
+            background: var(--dark); color: white; margin: 0; font-family: 'Poppins', sans-serif;
+            background-image: radial-gradient(circle at 50% 50%, #1a0000 0%, #050505 100%);
+        }
+        body::before { content: "R07"; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 20vw; color: rgba(255,0,0,0.03); z-index: -1; font-weight: 900; }
+        
+        .container { min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        .panel { 
+            background: rgba(10, 10, 10, 0.95); width: 100%; max-width: 700px; padding: 40px; 
+            border-radius: 20px; border: 2px solid var(--red); box-shadow: 0 0 50px rgba(255,0,0,0.3);
+            position: relative;
+        }
+
+        .header-box { text-align: center; margin-bottom: 30px; }
+        .header-box h1 { color: var(--red); margin: 0; letter-spacing: 2px; font-size: 1.8rem; }
+        .header-box p { color: #888; font-size: 0.9rem; margin: 5px 0; }
+
+        input { width: 100%; padding: 15px; margin-bottom: 15px; background: #000; border: 1px solid #333; color: white; border-radius: 8px; font-size: 1rem; box-sizing: border-box; }
+        input:focus { border-color: var(--red); outline: none; }
+
+        .btn { width: 100%; padding: 18px; background: var(--red); color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 2px; }
+        .btn:hover { background: #cc0000; box-shadow: 0 0 20px var(--red); }
+
+        .q-text-en { font-size: 1.3rem; font-weight: 700; color: #fff; display: block; }
+        .q-text-hi { font-size: 1.1rem; color: #ff6666; font-style: italic; display: block; margin-top: 10px; border-left: 3px solid var(--red); padding-left: 10px; }
+        
+        .opt-card { background: #151515; border: 1px solid #333; padding: 15px; border-radius: 10px; margin-bottom: 12px; cursor: pointer; transition: 0.3s; }
+        .opt-card:hover { border-color: var(--red); }
+        .opt-card.active { background: var(--red); border-color: white; }
+        
+        #login-screen, #quiz-screen, #result-screen { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="panel">
+        <div class="header-box">
+            <h1>LRK COMPUTER INSTITUTE</h1>
+            <p>MIHINPURWA, BAHRAICH | CCC MOCK TEST</p>
+        </div>
+
+        <div id="login-screen" style="display:block;">
+            <input type="text" id="stuName" placeholder="Full Name">
+            <input type="number" id="stuPhone" placeholder="Mobile Number (10 Digits)">
+            <button class="btn" onclick="startTest()">Start CCC Test</button>
+        </div>
+
+        <div id="quiz-screen">
+            <div id="status" style="color:var(--red); font-size:0.8rem; margin-bottom:10px;"></div>
+            <div style="margin-bottom:25px;">
+                <span id="engQ" class="q-text-en"></span>
+                <span id="hinQ" class="q-text-hi"></span>
+            </div>
+            <div id="options"></div>
+            <button class="btn" onclick="nextQ()" style="margin-top:20px;">Save & Next</button>
+        </div>
+
+        <div id="result-screen" style="text-align:center;">
+            <h2 style="color:var(--red);">EXAM COMPLETED</h2>
+            <div id="score" style="font-size:3rem; font-weight:900; margin:20px 0;"></div>
+            <button class="btn" onclick="location.reload()">Exit Test</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let questions = JSON.parse(localStorage.getItem('ccc_qs')) || [];
+    let curIdx = 0, score = 0, answers = [], student = {};
+
+    async function translate(text) {
+        if(!text) return "...";
+        try {
+            const res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=hi&dt=t&q=${encodeURI(text)}`);
+            const data = await res.json();
+            return data[0][0][0];
+        } catch(e) { return text; }
+    }
+
+    function startTest() {
+        const name = document.getElementById('stuName').value;
+        const phone = document.getElementById('stuPhone').value;
+        if(!name || phone.length < 10) return alert("Enter valid Name & Phone!");
+        student = {name, phone};
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('quiz-screen').style.display = 'block';
+        loadQ();
+    }
+
+    async function loadQ() {
+        const q = questions[curIdx];
+        document.getElementById('status').innerText = `TRANSLATING DATA... Q${curIdx+1}/${questions.length}`;
+        document.getElementById('engQ').innerText = q.q;
+        document.getElementById('hinQ').innerText = await translate(q.q);
+        
+        const optBox = document.getElementById('options');
+        optBox.innerHTML = "";
+        for(let k of ['a','b','c','d']) {
+            if(q[k]) {
+                const hOpt = await translate(q[k]);
+                const div = document.createElement('div');
+                div.className = `opt-card ${answers[curIdx] === k.toUpperCase() ? 'active' : ''}`;
+                div.innerHTML = `<b>${k.toUpperCase()}.</b> ${q[k]}<br><small style="opacity:0.8">${hOpt}</small>`;
+                div.onclick = () => {
+                    document.querySelectorAll('.opt-card').forEach(c => c.classList.remove('active'));
+                    div.classList.add('active');
+                    answers[curIdx] = k.toUpperCase();
+                };
+                optBox.appendChild(div);
+            }
+        }
+        document.getElementById('status').innerText = `LIVE: QUESTION ${curIdx+1}/${questions.length}`;
+    }
+
+    function nextQ() {
+        if(!answers[curIdx]) return alert("Select an answer!");
+        if(curIdx < questions.length - 1) { curIdx++; loadQ(); } else { finish(); }
+    }
+
+    function finish() {
+        score = 0;
+        questions.forEach((q, i) => { if(answers[i] === q.ans) score++; });
+        document.getElementById('quiz-screen').style.display = 'none';
+        document.getElementById('result-screen').style.display = 'block';
+        document.getElementById('score').innerText = `${score}/${questions.length}`;
+        
+        // Save Log
+        const logs = JSON.parse(localStorage.getItem('ccc_logs')) || [];
+        logs.push({...student, score: `${score}/${questions.length}`, date: new Date().toLocaleString()});
+        localStorage.setItem('ccc_logs', JSON.stringify(logs));
+    }
+</script>
+</body>
+</html>
