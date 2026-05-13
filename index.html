@@ -153,3 +153,72 @@
         document.getElementById('qStatus').innerText = `QUESTION ${curIdx + 1} / ${questions.length}`;
         document.getElementById('engQ').innerText = q.q;
         document.getElementById('hinQ').innerText = await translate(q.q);
+        
+        const optBox = document.getElementById('optionsBox');
+        optBox.innerHTML = "";
+
+        const keys = ['a', 'b', 'c', 'd'];
+        for (let k of keys) {
+            if(q[k]) {
+                const hOpt = await translate(q[k]);
+                const div = document.createElement('div');
+                div.className = `opt-card ${answers[curIdx] === k.toUpperCase() ? 'active' : ''}`;
+                div.innerHTML = `<b>${k.toUpperCase()}.</b> ${q[k]} <br> <small style="opacity:0.7">${hOpt}</small>`;
+                div.onclick = () => {
+                    document.querySelectorAll('.opt-card').forEach(c => c.classList.remove('active'));
+                    div.classList.add('active');
+                    answers[curIdx] = k.toUpperCase();
+                };
+                optBox.appendChild(div);
+            }
+        }
+    }
+
+    function nextQ() {
+        if(!answers[curIdx]) return alert("Please select an answer!");
+        
+        if(curIdx < questions.length - 1) {
+            curIdx++;
+            loadQ();
+        } else {
+            finish();
+        }
+    }
+
+    async function finish() {
+        document.getElementById('quiz-screen').innerHTML = "<h2 style='color:red; text-align:center;'>UPLOADING FINAL DATA...</h2>";
+        
+        const endTime = new Date();
+        const diff = Math.floor((endTime - startTime) / 60000); // Time in minutes
+        
+        score = 0;
+        questions.forEach((q, i) => { if(answers[i] === q.ans) score++; });
+
+        const logData = {
+            type: 'logs',
+            row: [
+                new Date().toLocaleString(),
+                student.name.toUpperCase(),
+                student.phone,
+                `${score}/${questions.length}`,
+                `${diff} Mins` // Time Duration Column
+            ]
+        };
+
+        try {
+            await fetch(SCRIPT_URL, { 
+                method: 'POST', 
+                mode: 'no-cors', 
+                body: JSON.stringify(logData) 
+            });
+            
+            document.getElementById('quiz-screen').style.display = 'none';
+            document.getElementById('result-screen').style.display = 'block';
+            document.getElementById('finalScore').innerText = `${score} / ${questions.length}`;
+        } catch(e) {
+            alert("Error saving result. Contact Teacher!");
+        }
+    }
+</script>
+</body>
+</html>
