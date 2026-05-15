@@ -147,6 +147,17 @@
 
         studentInfo = { name, phone };
         
+        // --- UPDATED: Login hote hi Tracker me status bhej raha hai ---
+        const startTime = new Date().toLocaleString();
+        const loginPayload = {
+            type: 'logs',
+            action: 'save',
+            row: [startTime, studentInfo.name, studentInfo.phone, "0/10", "STARTED (Pending)", "Level 1"]
+        };
+        
+        // Background fetch (Student ko wait nahi karwayenge)
+        fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(loginPayload) });
+
         // Show Loading
         document.getElementById('authView').innerHTML = `
             <div style="padding:100px 20px; text-align:center;">
@@ -160,7 +171,6 @@
             const res = await fetch(SCRIPT_URL);
             const db = await res.json();
             
-            // Filter and Randomize
             allQuestions = db.questions && db.questions.length > 1 ? db.questions.slice(1).filter(r => r[1]) : [];
             
             if(allQuestions.length === 0) {
@@ -190,7 +200,7 @@
         
         const labels = ['A', 'B', 'C', 'D'];
         [q[2], q[3], q[4], q[5]].forEach((txt, i) => {
-            if(txt && txt.toString().trim() !== "") {
+            if(txt && txt.toString().trim() !== "" && txt !== "-") {
                 const opt = document.createElement('div');
                 opt.className = "option-item fade-in";
                 opt.innerHTML = `<div class="opt-id">${labels[i]}</div> <span>${txt}</span>`;
@@ -222,17 +232,17 @@
         document.getElementById('appBody').innerHTML = `
             <div style="padding:100px 20px; text-align:center;">
                 <div class="loader"></div>
-                <h3>Saving Results...</h3>
-                <p>Do not close this window.</p>
+                <h3>Finalizing Results...</h3>
+                <p>Kripya window band na karein.</p>
             </div>
         `;
 
-        const grade = score >= 8 ? "S (Excellent)" : score >= 5 ? "A (Pass)" : "Fail";
+        const grade = score >= 8 ? "S (Excellent)" : score >= 5 ? "A (Pass)" : "FAIL";
         
         const payload = {
             type: 'logs',
             action: 'save',
-            row: [new Date().toLocaleString(), studentInfo.name, studentInfo.phone, `${score}/10`, grade, "Level 1"]
+            row: [new Date().toLocaleString() + " (Final)", studentInfo.name, studentInfo.phone, `${score}/10`, grade, "Level 1"]
         };
 
         try {
@@ -244,7 +254,7 @@
                     <div style="font-size:60px; font-weight:bold; color:var(--dark);">${score}/10</div>
                     <div style="margin:15px 0;"><span style="background:var(--primary); color:white; padding:8px 20px; border-radius:50px; font-weight:bold;">GRADE: ${grade}</span></div>
                     <p style="font-size:13px; color:#666; background:#f1f3f4; padding:15px; border-radius:12px;">
-                        Aapka result LRK database mein save ho gaya hai.
+                        Aapka final result LRK database mein update ho gaya hai.
                     </p>
                     <button class="btn-prime" style="margin-top:20px;" onclick="location.reload()">RE-START TEST</button>
                 </div>
