@@ -1,312 +1,316 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>R07 ADVANCED STUDENT PORTAL | LRK INSTITUTE</title>
+    <title>Enterprise Exam Portal | LRK Computer Institute</title>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
     <style>
-        :root { --red: #ff0000; --dark: #050505; --card-bg: #111; --glow: rgba(255, 0, 0, 0.4); }
-        
-        * { box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        
+        :root { 
+            --primary: #1a73e8; --dark: #0d47a1; --accent: #ffd700;
+            --bg: #f4f7fa; --white: #ffffff; --text: #202124;
+            --success: #1e8e3e; --danger: #d93025; --border: #dadce0;
+        }
+
         body { 
-            background: var(--dark); color: white; margin: 0; padding: 20px;
-            background-image: radial-gradient(circle at 50% 50%, #1a0000 0%, #050505 100%);
-            min-height: 100vh; display: flex; align-items: center; justify-content: center;
+            font-family: 'Poppins', 'Segoe UI', sans-serif; 
+            background: var(--bg); margin: 0; 
+            display: flex; justify-content: center; align-items: center; 
+            min-height: 100vh; color: var(--text);
         }
 
-        /* Ambient Top Laser Line */
-        body::before {
-            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 3px;
-            background: var(--red); box-shadow: 0 0 25px var(--red);
-            z-index: 1000; pointer-events: none;
+        /* Container Layout */
+        .app-container { 
+            background: var(--white); width: 95%; max-width: 580px; 
+            border-radius: 24px; box-shadow: 0 12px 40px rgba(0,0,0,0.12); 
+            overflow: hidden; transition: transform 0.3s ease;
         }
 
-        .main-container { width: 100%; max-width: 700px; }
-
-        /* Glassmorphic Cyber Cards */
-        .cyber-card {
-            background: rgba(15, 15, 15, 0.95); border: 2px solid var(--red);
-            box-shadow: 0 0 30px var(--glow); border-radius: 20px; padding: 30px;
+        /* Professional Header */
+        .brand-header { 
+            background: var(--dark); color: white; padding: 30px 20px; 
+            text-align: center; border-bottom: 5px solid var(--accent);
         }
+        .brand-header h1 { margin: 0; font-size: 22px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; }
+        .brand-header p { margin: 8px 0 0; font-size: 12px; opacity: 0.8; letter-spacing: 0.5px; }
 
-        .header { text-align: center; margin-bottom: 25px; border-bottom: 1px solid #333; padding-bottom: 15px; }
-        .header h1 { font-size: 2.2rem; color: var(--red); text-shadow: 0 0 15px var(--red); margin: 0; letter-spacing: 3px; }
-        .header p { letter-spacing: 1.5px; opacity: 0.7; margin-top: 5px; font-size: 11px; text-transform: uppercase; }
+        /* Progress Bar */
+        .progress-track { height: 6px; background: #e0e0e0; width: 100%; }
+        #pBar { height: 100%; background: var(--primary); width: 0%; transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
 
-        /* Login & Info Form */
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #aaa; margin-bottom: 8px; }
-        input { width: 100%; padding: 14px; background: #000; border: 1px solid #333; color: #fff; border-radius: 10px; outline: none; transition: 0.3s; font-size: 15px; }
-        input:focus { border-color: var(--red); box-shadow: 0 0 10px var(--glow); }
+        .view-content { padding: 35px 25px; }
 
-        /* Quiz Screening Window */
-        #quiz-window { display: none; }
-        .timer-panel { display: flex; justify-content: space-between; align-items: center; background: #111; padding: 12px 20px; border-radius: 10px; border-left: 4px solid var(--red); margin-bottom: 25px; }
-        .timer-text { color: #00ff00; font-family: monospace; font-weight: bold; font-size: 1.2rem; }
+        /* Welcome/Login Styling */
+        .welcome-msg { text-align: center; margin-bottom: 30px; }
+        .welcome-msg h2 { font-size: 20px; margin: 0; color: var(--dark); }
+        .welcome-msg p { font-size: 14px; color: #5f6368; margin-top: 5px; }
 
-        .question-box { background: #000; padding: 20px; border-radius: 12px; border: 1px solid #222; margin-bottom: 20px; }
-        .q-text { font-size: 1.2rem; font-weight: 600; margin-bottom: 15px; line-height: 1.5; }
+        .input-field { position: relative; margin-bottom: 25px; }
+        .input-field label { 
+            display: block; font-size: 13px; font-weight: 600; 
+            margin-bottom: 8px; color: #3c4043;
+        }
+        .input-field label span { color: var(--primary); font-weight: normal; }
+
+        input { 
+            width: 100%; padding: 16px; border: 2px solid var(--border); 
+            border-radius: 14px; font-size: 16px; box-sizing: border-box; 
+            outline: none; transition: all 0.3s ease;
+        }
+        input:focus { border-color: var(--primary); background: #f8fbff; box-shadow: 0 0 0 4px rgba(26,115,232,0.1); }
+
+        /* Button Architecture */
+        .btn-prime { 
+            background: var(--primary); color: white; border: none; width: 100%; 
+            padding: 18px; border-radius: 14px; font-weight: 600; font-size: 17px;
+            cursor: pointer; transition: all 0.3s ease; 
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+        }
+        .btn-prime:hover { background: var(--dark); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(26,115,232,0.3); }
+        .btn-prime:active { transform: translateY(0); }
+
+        /* Question & Options UI */
+        .question-card h3 { font-size: 18px; line-height: 1.5; margin-bottom: 25px; }
         
-        /* Options Radio Grid */
-        .option-container { display: flex; flex-direction: column; gap: 10px; }
-        .option-label { display: flex; align-items: center; background: #111; border: 1px solid #222; padding: 14px; border-radius: 8px; cursor: pointer; transition: 0.2s; font-size: 14px; }
-        .option-label:hover { background: #1a0000; border-color: var(--red); }
-        .option-label input { width: auto; margin-right: 15px; accent-color: var(--red); }
+        .options-list { display: flex; flex-direction: column; gap: 12px; }
+        .option-item { 
+            display: flex; align-items: center; padding: 16px; 
+            border: 2px solid var(--border); border-radius: 14px; 
+            cursor: pointer; transition: 0.2s; position: relative;
+        }
+        .option-item:hover { border-color: var(--primary); background: #f8fbff; }
+        .option-item.active { border-color: var(--primary); background: #e8f0fe; border-width: 2px; }
+        
+        .opt-id { 
+            width: 32px; height: 32px; background: #f1f3f4; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin-right: 15px; font-size: 14px; font-weight: bold; color: #5f6368;
+        }
+        .option-item.active .opt-id { background: var(--primary); color: white; }
 
-        /* Navigation Buttons */
-        .nav-btn-grid { display: flex; justify-content: space-between; gap: 15px; margin-top: 20px; }
+        /* Status Badges */
+        .badge { padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+        .badge-live { background: #e6f4ea; color: var(--success); }
 
-        .btn-cyber { padding: 14px 28px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 14px; letter-spacing: 1px; transition: 0.2s; display: flex; align-items: center; gap: 8px; }
-        .btn-primary { background: var(--red); color: white; box-shadow: 0 0 15px var(--glow); }
-        .btn-primary:hover { background: #cc0000; transform: translateY(-2px); }
-        .btn-secondary { background: #222; color: white; border: 1px solid #333; }
-        .btn-secondary:hover { background: #333; }
-        .btn-primary:disabled { background: #555; box-shadow: none; cursor: not-allowed; transform: none; }
+        /* Animations */
+        .fade-in { animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Score Dashboard Result View */
-        #result-window { display: none; text-align: center; }
-        .score-circle { width: 140px; height: 140px; border-radius: 50%; border: 4px solid var(--red); display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 25px auto; box-shadow: 0 0 20px var(--glow); background: #000; }
-        .score-num { font-size: 2.2rem; font-weight: bold; color: var(--red); }
-
-        #submission-loader { display: none; color: #ffaa00; font-weight: bold; margin-top: 15px; font-size: 14px; }
+        /* Loader */
+        .loader-spin { border: 4px solid #f3f3f3; border-top: 4px solid var(--primary); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 20px auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
-    <div class="main-container">
-        
-        <div class="cyber-card" id="login-window">
-            <div class="header">
-                <h1>R07 PORTAL SYSTEM</h1>
-                <p>LRK COMPUTER INSTITUTE - ONLINE EXAM TERMINAL</p>
+<div class="app-container" id="appBody">
+    <div id="authView" class="fade-in">
+        <header class="brand-header">
+            <h1>LRK COMPUTER INSTITUTE</h1>
+            <p>ISO 9001:2015 CERTIFIED • GOVT RECOGNIZED • TECHNICAL HUB</p>
+        </header>
+
+        <div class="view-content">
+            <div class="welcome-msg">
+                <h2>Digital Exam Portal</h2>
+                <p>Kripya apni jaankari bharein / Please enter details</p>
             </div>
-            
-            <div class="form-group">
-                <label><i class="fas fa-user"></i> Full Student Name</label>
-                <input type="text" id="studentName" placeholder="Enter your official full name...">
+
+            <div class="input-field">
+                <label>STUDENT FULL NAME / विद्यार्थी का पूरा नाम <span>(A-Z)</span></label>
+                <input type="text" id="nameInp" placeholder="Enter, your name" autocomplete="off">
             </div>
-            <div class="form-group">
-                <label><i class="fas fa-phone-alt"></i> Contact Number (Mobile)</label>
-                <input type="text" id="studentPhone" placeholder="Enter 10-digit mobile number...">
+
+            <div class="input-field">
+                <label>WHATSAPP NUMBER / व्हाट्सएप नंबर <span>(10-Digits)</span></label>
+                <input type="number" id="phoneInp" placeholder="your phone no.">
             </div>
-            
-            <button class="btn-cyber btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;" onclick="startExamEngine()">
-                <i class="fas fa-bolt"></i> Initialize Secure Exam Loop
+
+            <div style="background: #fff9e6; padding: 15px; border-radius: 12px; font-size: 12px; margin-bottom: 25px; border: 1px solid #ffe082;">
+                <i class="fas fa-exclamation-triangle"></i> <b>Instruction:</b> Do not refresh the page during the exam. परीक्षा के दौरान पेज रिफ्रेश न करें।
+            </div>
+
+            <button class="btn-prime" onclick="validateAndStart()">
+                CONTINUE TO EXAM / परीक्षा शुरू करें <i class="fas fa-arrow-right"></i>
             </button>
         </div>
-
-        <div class="cyber-card" id="quiz-window">
-            <div class="timer-panel">
-                <div><i class="fas fa-user-graduate" style="color:var(--red);"></i> <span id="displayStudent">Student</span></div>
-                <div class="timer-text"><i class="fas fa-clock"></i> <span id="clockClock">00:00</span></div>
-            </div>
-
-            <div class="question-box">
-                <div class="q-text" id="targetQText">Loading structural pipeline array dataset from core repository...</div>
-                <div class="option-container">
-                    <label class="option-label"><input type="radio" name="quizOpt" value="A"> <span id="lblA">Option A</span></label>
-                    <label class="option-label"><input type="radio" name="quizOpt" value="B"> <span id="lblB">Option B</span></label>
-                    <label class="option-label"><input type="radio" name="quizOpt" value="C"> <span id="lblC">Option C</span></label>
-                    <label class="option-label"><input type="radio" name="quizOpt" value="D"> <span id="lblD">Option D</span></label>
-                </div>
-            </div>
-
-            <div class="nav-btn-grid">
-                <button class="btn-cyber btn-secondary" onclick="movePrevQ()"><i class="fas fa-angle-double-left"></i> Previous</button>
-                <button class="btn-cyber btn-primary" id="nextSubmitBtn" onclick="moveNextQ()">Next Question <i class="fas fa-angle-double-right"></i></button>
-            </div>
-        </div>
-
-        <div class="cyber-card" id="result-window">
-            <div class="header">
-                <h1>EXAM TERMINATED</h1>
-                <p>Cloud Synchronized Result Packet Matrix</p>
-            </div>
-            <p style="font-size:15px; color:#aaa; margin:0;">Congratulations <b id="resName" style="color:#fff;">Student</b>, your data sheet has been uploaded.</p>
-            
-            <div class="score-circle">
-                <span class="score-num" id="finalScoreDisplay">0/0</span>
-                <span style="font-size:10px; text-transform:uppercase; color:#888; letter-spacing:1px; margin-top:2px;">Final Score</span>
-            </div>
-            
-            <p style="color:#00ff00; font-family:monospace; font-weight:bold;"><i class="fas fa-hourglass-half"></i> Total Time Taken: <span id="resTime">00:00</span></p>
-            <div id="submission-loader"><i class="fas fa-network-wired fa-spin"></i> TRANSMITTING MATRIX LOGS TO R07 REPOSITORY...</div>
-        </div>
-
     </div>
 
-    <script>
-        // AAPKA CONFIG-POWERED DEPLOYMENT WEB APP URL (UPDATED)
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyY1jBIif_3mX5y_chz964qZTSfzFsAuOw1qOaWrYGKPlfztzuzEcGBwGs5WgDwG6gMsQ/exec";
-        
-        let questionsList = [];
-        let studentAnswers = {}; // Index mapping
-        let activeQIdx = 0;
-        
-        let timerInterval;
-        let secondsElapsed = 0;
-        
-        let sName = "";
-        let sPhone = "";
+    <div id="quizView" style="display:none;">
+        <div class="progress-track"><div id="pBar"></div></div>
+        <div style="display: flex; justify-content: space-between; padding: 15px 25px; background: #f8f9fa;">
+            <span id="qCount" style="font-weight: 600; color: var(--primary);">Q 1/10</span>
+            <span class="badge badge-live"><i class="fas fa-dot-circle"></i> LIVE EXAM</span>
+        </div>
 
-        // Background initialization pre-loading
-        async function fetchQuestionsCache() {
-            try {
-                const res = await fetch(SCRIPT_URL);
-                const data = await res.json();
-                questionsList = data.questions.slice(1); // Dropping row headers
-            } catch (e) {
-                alert("Database link pipeline error! Check console server configurations.");
-            }
-        }
-
-        function startExamEngine() {
-            sName = document.getElementById('studentName').value.trim();
-            sPhone = document.getElementById('studentPhone').value.trim();
-
-            if(!sName || sPhone.length < 10) {
-                return alert("Valid Authentication Input Error:\n\nKripya apna poora naam aur valid 10-digit mobile number enter karein.");
-            }
-            if(questionsList.length === 0) {
-                return alert("Server Warning: Database is empty or syncing. Please retry in 3 seconds.");
-            }
-
-            // Window switching sequences
-            document.getElementById('login-window').style.display = "none";
-            document.getElementById('quiz-window').style.display = "block";
-            document.getElementById('displayStudent').innerText = sName.toUpperCase();
-
-            startClockEngine();
-            loadActiveQuestion();
-        }
-
-        function startClockEngine() {
-            timerInterval = setInterval(() => {
-                secondsElapsed++;
-                let mins = Math.floor(secondsElapsed / 60).toString().padStart(2, '0');
-                let secs = (secondsElapsed % 60).toString().padStart(2, '0');
-                document.getElementById('clockClock').innerText = `${mins}:${secs}`;
-            }, 1000);
-        }
-
-        function loadActiveQuestion() {
-            if(questionsList.length === 0) return;
+        <div class="view-content question-card fade-in">
+            <h3 id="qContent">...</h3>
+            <div class="options-list" id="optionGrid"></div>
             
-            const currentQ = questionsList[activeQIdx];
-            document.getElementById('targetQText').innerText = `Q${activeQIdx + 1}. ${currentQ[1]}`;
-            document.getElementById('lblA').innerText = currentQ[2];
-            document.getElementById('lblB').innerText = currentQ[3];
-            document.getElementById('lblC').innerText = currentQ[4];
-            document.getElementById('lblD').innerText = currentQ[5];
+            <div style="margin-top: 35px;">
+                <button class="btn-prime" onclick="submitAnswer()">
+                    SAVE & NEXT / अगला प्रश्न <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
-            // Clear checkboxes inputs structure configuration
-            const options = document.getElementsByName('quizOpt');
-            options.forEach(opt => opt.checked = false);
+<script>
+    const API_URL = "https://script.google.com/macros/s/AKfycbwX3CfQslJyEJLOggA8bSWt758TpBASwO5S_V6BFa57LqRDIM0_ai6PPg1rOOGoNMnI/exec";
+    
+    let allData = [];
+    let sessionQuestions = [];
+    let step = 0;
+    let studentPoints = 0;
+    let activeStudent = {};
 
-            // Re-populate choices logs if historical paths exist
-            if(studentAnswers[activeQIdx]) {
-                options.forEach(opt => {
-                    if(opt.value === studentAnswers[activeQIdx]) opt.checked = true;
-                });
-            }
+    // 1. Core Logic: Initialization
+    async function validateAndStart() {
+        const name = document.getElementById('nameInp').value.trim();
+        const phone = document.getElementById('phoneInp').value.trim();
 
-            // Dynamic layout mapping buttons titles adjustments
-            const nextBtn = document.getElementById('nextSubmitBtn');
-            if(activeQIdx === questionsList.length - 1) {
-                nextBtn.innerHTML = `Finish Test & Submit <i class="fas fa-check-circle"></i>`;
-                nextBtn.style.background = "#00ff00";
-                nextBtn.style.color = "#000";
-            } else {
-                nextBtn.innerHTML = `Next Question <i class="fas fa-angle-double-right"></i>`;
-                nextBtn.style.background = "var(--red)";
-                nextBtn.style.color = "white";
-            }
+        if(name.length < 3 || phone.length < 10) {
+            return alert("Please enter valid full name and 10-digit mobile number!");
         }
 
-        function saveOptionState() {
-            const options = document.getElementsByName('quizOpt');
-            let marked = null;
-            options.forEach(opt => { if(opt.checked) marked = opt.value; });
-            if(marked) studentAnswers[activeQIdx] = marked;
-        }
+        activeStudent = { name, phone };
 
-        function moveNextQ() {
-            saveOptionState();
+        // Loader View
+        document.getElementById('authView').innerHTML = `
+            <div style="padding:100px 20px; text-align:center;">
+                <div class="loader-spin"></div>
+                <h3 style="color:var(--primary)">Setting up your exam...</h3>
+                <p style="font-size:13px; color:#666;">Kripya thoda intezaar karein...</p>
+            </div>
+        `;
+
+        try {
+            const response = await fetch(API_URL);
+            const data = await response.json();
             
-            if(activeQIdx < questionsList.length - 1) {
-                activeQIdx++;
-                loadActiveQuestion();
-            } else {
-                terminateAndUploadExam();
+            // Filtering empty rows if any
+            allData = data.questions.slice(1).filter(r => r[1]);
+            
+            // Professional Logic: Randomize and pick 10
+            sessionQuestions = allData.sort(() => 0.5 - Math.random()).slice(0, 10);
+
+            document.getElementById('authView').style.display = 'none';
+            document.getElementById('quizView').style.display = 'block';
+            loadQuestion();
+        } catch (err) {
+            alert("Connection Error! Please check your internet.");
+            location.reload();
+        }
+    }
+
+    // 2. Core Logic: Question Renderer
+    function loadQuestion() {
+        const qData = sessionQuestions[step];
+        const grid = document.getElementById('optionGrid');
+        
+        document.getElementById('qCount').innerText = `Question ${step + 1} of 10`;
+        document.getElementById('qContent').innerText = qData[1];
+        document.getElementById('pBar').style.width = `${(step + 1) * 10}%`;
+
+        grid.innerHTML = "";
+        
+        // Dynamic Options Builder (A to D)
+        const labels = ['A', 'B', 'C', 'D'];
+        [qData[2], qData[3], qData[4], qData[5]].forEach((text, i) => {
+            if(text && text.toString().trim() !== "") {
+                const opt = document.createElement('div');
+                opt.className = "option-item fade-in";
+                opt.innerHTML = `<div class="opt-id">${labels[i]}</div> <span>${text}</span>`;
+                opt.onclick = () => {
+                    document.querySelectorAll('.option-item').forEach(el => el.classList.remove('active'));
+                    opt.classList.add('active');
+                    opt.dataset.choice = labels[i];
+                };
+                grid.appendChild(opt);
             }
+        });
+    }
+
+    // 3. Core Logic: Answer Processing
+    async function submitAnswer() {
+        const selected = document.querySelector('.option-item.active');
+        if(!selected) return alert("Please select an answer to continue!");
+
+        // Score update
+        if(selected.dataset.choice === sessionQuestions[step][6]) {
+            studentPoints++;
         }
 
-        function movePrevQ() {
-            saveOptionState();
-            if(activeQIdx > 0) {
-                activeQIdx--;
-                loadActiveQuestion();
-            }
+        step++;
+        if(step < sessionQuestions.length) {
+            loadQuestion();
+        } else {
+            finalizeExam();
         }
+    }
 
-        async function terminateAndUploadExam() {
-            clearInterval(timerInterval);
-            saveOptionState();
+    // 4. Core Logic: Final Result & R07 Cloud Sync
+    async function finalizeExam() {
+        // Full screen blocking loader
+        document.getElementById('appBody').innerHTML = `
+            <div style="padding:80px 20px; text-align:center;">
+                <i class="fas fa-cloud-upload-alt fa-3x" style="color:var(--primary); margin-bottom:20px;"></i>
+                <h3>Syncing Results...</h3>
+                <p>Do not close this window.</p>
+            </div>
+        `;
 
-            // Calculate Score Matrix
-            let correctCount = 0;
-            questionsList.forEach((q, idx) => {
-                const actualAnswerKey = q[6] ? q[6].trim().toUpperCase() : "";
-                const studentSelection = studentAnswers[idx] ? studentAnswers[idx].trim().toUpperCase() : "";
-                if(studentSelection === actualAnswerKey) {
-                    correctCount++;
-                }
+        const grade = studentPoints >= 8 ? 'S (EXCELLENT)' : studentPoints >= 6 ? 'A (VERY GOOD)' : 'QUALIFIED';
+        const finalScore = studentPoints + "/10";
+
+        const logData = {
+            type: 'logs',
+            action: 'save',
+            row: [
+                new Date().toLocaleString('en-IN'), 
+                activeStudent.name, 
+                activeStudent.phone, 
+                finalScore, 
+                grade, 
+                "Level 1"
+            ]
+        };
+
+        try {
+            // R07 Universal Bridge POST
+            await fetch(API_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: JSON.stringify(logData)
             });
 
-            const totalQuestions = questionsList.length;
-            const finalScoreString = `${correctCount}/${totalQuestions}`;
-
-            let finalMins = Math.floor(secondsElapsed / 60).toString().padStart(2, '0');
-            let finalSecs = (secondsElapsed % 60).toString().padStart(2, '0');
-            const totalDurationString = `${finalMins}:${finalSecs} Min`;
-
-            // Display components routing layout switch updates
-            document.getElementById('quiz-window').style.display = "none";
-            document.getElementById('result-window').style.display = "block";
-            document.getElementById('resName').innerText = sName.toUpperCase();
-            document.getElementById('finalScoreDisplay').innerText = finalScoreString;
-            document.getElementById('resTime').innerText = totalDurationString;
-
-            document.getElementById('submission-loader').style.display = "block";
-
-            // Prepare Payload Package data matrix logs array routing
-            const timestampNow = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
-            
-            const payload = {
-                type: 'logs',
-                action: 'save',
-                row: [
-                    timestampNow,
-                    sName,
-                    sPhone,
-                    finalScoreString,
-                    totalDurationString
-                ]
-            };
-
-            try {
-                await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) });
-                document.getElementById('submission-loader').innerHTML = `<i class="fas fa-cloud-upload-alt"></i> DATA TRANSMITTED SECURELY TO THE CLOUD CORE DATABASE!`;
-                document.getElementById('submission-loader').style.color = "#00ff00";
-            } catch(err) {
-                document.getElementById('submission-loader').innerText = "Network pipeline error encountered during package transfers.";
-                document.getElementById('submission-loader').style.color = "red";
-            }
+            // Final Professional Result Card
+            document.getElementById('appBody').innerHTML = `
+                <div class="brand-header">
+                    <h1>EXAM RESULT</h1>
+                </div>
+                <div class="view-content fade-in" style="text-align:center;">
+                    <div style="font-size:14px; color:#5f6368; margin-bottom:10px;">WELL DONE, ${activeStudent.name}!</div>
+                    <div style="font-size:72px; font-weight:bold; color:var(--dark); line-height:1;">${studentPoints}<span style="font-size:24px; color:#999;">/10</span></div>
+                    <div style="margin:20px 0;">
+                        <span style="background:var(--primary); color:white; padding:8px 25px; border-radius:50px; font-weight:600;">GRADE: ${grade}</span>
+                    </div>
+                    <p style="font-size:13px; color:#666; background:#f1f3f4; padding:15px; border-radius:10px;">
+                        Aapka certificate aur details LRK database mein save ho gayi hain.
+                    </p>
+                    <button class="btn-prime" style="margin-top:20px;" onclick="location.reload()">
+                        <i class="fas fa-redo"></i> START NEW SESSION
+                    </button>
+                </div>
+            `;
+        } catch (e) {
+            alert("Data Sync Failed! Result not saved.");
         }
-
-        window.onload = fetchQuestionsCache;
-    </script>
+    }
+</script>
 </body>
 </html>
