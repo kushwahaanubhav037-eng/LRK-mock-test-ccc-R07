@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enterprise Exam Portal | LRK Computer Institute</title>
+    <title>Digital Exam Portal | LRK Computer Institute</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
@@ -16,92 +16,69 @@
         }
 
         body { 
-            font-family: 'Poppins', 'Segoe UI', sans-serif; 
+            font-family: 'Poppins', sans-serif; 
             background: var(--bg); margin: 0; 
             display: flex; justify-content: center; align-items: center; 
             min-height: 100vh; color: var(--text);
         }
 
-        /* Container Layout */
         .app-container { 
-            background: var(--white); width: 95%; max-width: 580px; 
+            background: var(--white); width: 95%; max-width: 550px; 
             border-radius: 24px; box-shadow: 0 12px 40px rgba(0,0,0,0.12); 
-            overflow: hidden; transition: transform 0.3s ease;
+            overflow: hidden; transition: 0.3s;
         }
 
-        /* Professional Header */
         .brand-header { 
-            background: var(--dark); color: white; padding: 30px 20px; 
+            background: var(--dark); color: white; padding: 25px 20px; 
             text-align: center; border-bottom: 5px solid var(--accent);
         }
-        .brand-header h1 { margin: 0; font-size: 22px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; }
-        .brand-header p { margin: 8px 0 0; font-size: 12px; opacity: 0.8; letter-spacing: 0.5px; }
+        .brand-header h1 { margin: 0; font-size: 20px; letter-spacing: 1px; }
 
-        /* Progress Bar */
         .progress-track { height: 6px; background: #e0e0e0; width: 100%; }
-        #pBar { height: 100%; background: var(--primary); width: 0%; transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        #pBar { height: 100%; background: var(--primary); width: 0%; transition: 0.4s; }
 
-        .view-content { padding: 35px 25px; }
+        .view-content { padding: 30px 25px; }
 
-        /* Welcome/Login Styling */
-        .welcome-msg { text-align: center; margin-bottom: 30px; }
-        .welcome-msg h2 { font-size: 20px; margin: 0; color: var(--dark); }
-        .welcome-msg p { font-size: 14px; color: #5f6368; margin-top: 5px; }
-
-        .input-field { position: relative; margin-bottom: 25px; }
-        .input-field label { 
-            display: block; font-size: 13px; font-weight: 600; 
-            margin-bottom: 8px; color: #3c4043;
-        }
-        .input-field label span { color: var(--primary); font-weight: normal; }
-
+        /* Inputs */
+        .input-field { margin-bottom: 20px; }
+        label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 8px; color: #5f6368; }
         input { 
-            width: 100%; padding: 16px; border: 2px solid var(--border); 
-            border-radius: 14px; font-size: 16px; box-sizing: border-box; 
-            outline: none; transition: all 0.3s ease;
+            width: 100%; padding: 15px; border: 2px solid var(--border); 
+            border-radius: 12px; font-size: 16px; box-sizing: border-box; outline: none;
         }
-        input:focus { border-color: var(--primary); background: #f8fbff; box-shadow: 0 0 0 4px rgba(26,115,232,0.1); }
+        input:focus { border-color: var(--primary); background: #f8fbff; }
 
-        /* Button Architecture */
+        /* Buttons */
         .btn-prime { 
             background: var(--primary); color: white; border: none; width: 100%; 
-            padding: 18px; border-radius: 14px; font-weight: 600; font-size: 17px;
-            cursor: pointer; transition: all 0.3s ease; 
-            display: flex; align-items: center; justify-content: center; gap: 12px;
+            padding: 18px; border-radius: 14px; font-weight: 600; font-size: 16px;
+            cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px;
         }
-        .btn-prime:hover { background: var(--dark); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(26,115,232,0.3); }
-        .btn-prime:active { transform: translateY(0); }
+        .btn-prime:hover { background: var(--dark); }
+        .btn-prime:disabled { background: #ccc; }
 
-        /* Question & Options UI */
-        .question-card h3 { font-size: 18px; line-height: 1.5; margin-bottom: 25px; }
-        
-        .options-list { display: flex; flex-direction: column; gap: 12px; }
+        /* Quiz UI */
+        .question-card h3 { font-size: 18px; line-height: 1.6; margin-bottom: 20px; color: var(--dark); }
+        .options-list { display: flex; flex-direction: column; gap: 10px; }
         .option-item { 
-            display: flex; align-items: center; padding: 16px; 
-            border: 2px solid var(--border); border-radius: 14px; 
-            cursor: pointer; transition: 0.2s; position: relative;
+            display: flex; align-items: center; padding: 14px; 
+            border: 2px solid var(--border); border-radius: 12px; 
+            cursor: pointer; transition: 0.2s;
         }
         .option-item:hover { border-color: var(--primary); background: #f8fbff; }
-        .option-item.active { border-color: var(--primary); background: #e8f0fe; border-width: 2px; }
+        .option-item.active { border-color: var(--primary); background: #e8f0fe; font-weight: 600; }
         
         .opt-id { 
-            width: 32px; height: 32px; background: #f1f3f4; border-radius: 50%;
+            width: 28px; height: 28px; background: #f1f3f4; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            margin-right: 15px; font-size: 14px; font-weight: bold; color: #5f6368;
+            margin-right: 12px; font-size: 12px; font-weight: bold;
         }
         .option-item.active .opt-id { background: var(--primary); color: white; }
 
-        /* Status Badges */
-        .badge { padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
-        .badge-live { background: #e6f4ea; color: var(--success); }
-
-        /* Animations */
-        .fade-in { animation: fadeIn 0.5s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Loader */
-        .loader-spin { border: 4px solid #f3f3f3; border-top: 4px solid var(--primary); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 20px auto; }
+        .loader { border: 4px solid #f3f3f3; border-top: 4px solid var(--primary); border-radius: 50%; width: 35px; height: 35px; animation: spin 1s linear infinite; margin: 20px auto; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .fade-in { animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
@@ -110,205 +87,170 @@
     <div id="authView" class="fade-in">
         <header class="brand-header">
             <h1>LRK COMPUTER INSTITUTE</h1>
-            <p>ISO 9001:2015 CERTIFIED • GOVT RECOGNIZED • TECHNICAL HUB</p>
+            <p style="margin:5px 0 0; font-size:10px; opacity:0.8;">ISO 9001:2015 CERTIFIED • GOVT RECOGNIZED</p>
         </header>
 
         <div class="view-content">
-            <div class="welcome-msg">
-                <h2>Digital Exam Portal</h2>
-                <p>Kripya apni jaankari bharein / Please enter details</p>
+            <div style="text-align:center; margin-bottom:25px;">
+                <h2 style="margin:0; font-size:18px;">Student Exam Login</h2>
+                <p style="font-size:12px; color:#666;">Kripya apni jaankari bharein</p>
             </div>
 
             <div class="input-field">
-                <label>STUDENT FULL NAME / विद्यार्थी का पूरा नाम <span>(A-Z)</span></label>
-                <input type="text" id="nameInp" placeholder="Enter, your name" autocomplete="off">
+                <label>FULL NAME / पूरा नाम</label>
+                <input type="text" id="nameInp" placeholder="Enter your name" autocomplete="off">
             </div>
 
             <div class="input-field">
-                <label>WHATSAPP NUMBER / व्हाट्सएप नंबर <span>(10-Digits)</span></label>
-                <input type="number" id="phoneInp" placeholder="your phone no.">
+                <label>WHATSAPP NUMBER / व्हाट्सएप नंबर</label>
+                <input type="number" id="phoneInp" placeholder="10-digit number">
             </div>
 
-            <div style="background: #fff9e6; padding: 15px; border-radius: 12px; font-size: 12px; margin-bottom: 25px; border: 1px solid #ffe082;">
-                <i class="fas fa-exclamation-triangle"></i> <b>Instruction:</b> Do not refresh the page during the exam. परीक्षा के दौरान पेज रिफ्रेश न करें।
-            </div>
-
-            <button class="btn-prime" onclick="validateAndStart()">
-                CONTINUE TO EXAM / परीक्षा शुरू करें <i class="fas fa-arrow-right"></i>
+            <button class="btn-prime" onclick="startExam()">
+                START EXAM / परीक्षा शुरू करें <i class="fas fa-play"></i>
             </button>
         </div>
     </div>
 
     <div id="quizView" style="display:none;">
         <div class="progress-track"><div id="pBar"></div></div>
-        <div style="display: flex; justify-content: space-between; padding: 15px 25px; background: #f8f9fa;">
-            <span id="qCount" style="font-weight: 600; color: var(--primary);">Q 1/10</span>
-            <span class="badge badge-live"><i class="fas fa-dot-circle"></i> LIVE EXAM</span>
+        <div style="display:flex; justify-content:space-between; padding:12px 20px; background:#f8f9fa; font-size:13px; font-weight:600;">
+            <span id="qCount" style="color:var(--primary);">Question 1/10</span>
+            <span style="color:var(--success);"><i class="fas fa-circle"></i> LIVE</span>
         </div>
 
         <div class="view-content question-card fade-in">
-            <h3 id="qContent">...</h3>
+            <h3 id="qContent">Loading question...</h3>
             <div class="options-list" id="optionGrid"></div>
             
-            <div style="margin-top: 35px;">
-                <button class="btn-prime" onclick="submitAnswer()">
-                    SAVE & NEXT / अगला प्रश्न <i class="fas fa-chevron-right"></i>
-                </button>
-            </div>
+            <button class="btn-prime" style="margin-top:30px;" onclick="nextStep()">
+                SAVE & NEXT / अगला प्रश्न <i class="fas fa-chevron-right"></i>
+            </button>
         </div>
     </div>
 </div>
 
 <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbwX3CfQslJyEJLOggA8bSWt758TpBASwO5S_V6BFa57LqRDIM0_ai6PPg1rOOGoNMnI/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbypq0a5mRG2pFLs63pyvoxgLz-9w4wPrLbCWI8dVL1VPqT4sX5Obh7f3dq0htjT3oDT/exec";
     
-    let allData = [];
-    let sessionQuestions = [];
-    let step = 0;
-    let studentPoints = 0;
-    let activeStudent = {};
+    let allQuestions = [];
+    let sessionQs = [];
+    let currentIdx = 0;
+    let score = 0;
+    let studentInfo = {};
 
-    // 1. Core Logic: Initialization
-    async function validateAndStart() {
+    async function startExam() {
         const name = document.getElementById('nameInp').value.trim();
         const phone = document.getElementById('phoneInp').value.trim();
 
-        if(name.length < 3 || phone.length < 10) {
-            return alert("Please enter valid full name and 10-digit mobile number!");
-        }
+        if(name.length < 3 || phone.length < 10) return alert("Please enter valid Name and 10-digit Phone!");
 
-        activeStudent = { name, phone };
-
-        // Loader View
+        studentInfo = { name, phone };
+        
+        // Show Loading
         document.getElementById('authView').innerHTML = `
             <div style="padding:100px 20px; text-align:center;">
-                <div class="loader-spin"></div>
-                <h3 style="color:var(--primary)">Setting up your exam...</h3>
-                <p style="font-size:13px; color:#666;">Kripya thoda intezaar karein...</p>
+                <div class="loader"></div>
+                <h3 style="color:var(--primary)">Fetching Exam Paper...</h3>
+                <p style="font-size:12px; color:#666;">Kripya thoda intezaar karein...</p>
             </div>
         `;
 
         try {
-            const response = await fetch(API_URL);
-            const data = await response.json();
+            const res = await fetch(SCRIPT_URL);
+            const db = await res.json();
             
-            // Filtering empty rows if any
-            allData = data.questions.slice(1).filter(r => r[1]);
+            // Filter and Randomize
+            allQuestions = db.questions && db.questions.length > 1 ? db.questions.slice(1).filter(r => r[1]) : [];
             
-            // Professional Logic: Randomize and pick 10
-            sessionQuestions = allData.sort(() => 0.5 - Math.random()).slice(0, 10);
+            if(allQuestions.length === 0) {
+                alert("No questions found in database!");
+                return location.reload();
+            }
 
+            sessionQs = allQuestions.sort(() => 0.5 - Math.random()).slice(0, 10);
+            
             document.getElementById('authView').style.display = 'none';
             document.getElementById('quizView').style.display = 'block';
-            loadQuestion();
-        } catch (err) {
-            alert("Connection Error! Please check your internet.");
+            showQuestion();
+        } catch (e) {
+            alert("Connection Error! Check internet.");
             location.reload();
         }
     }
 
-    // 2. Core Logic: Question Renderer
-    function loadQuestion() {
-        const qData = sessionQuestions[step];
-        const grid = document.getElementById('optionGrid');
-        
-        document.getElementById('qCount').innerText = `Question ${step + 1} of 10`;
-        document.getElementById('qContent').innerText = qData[1];
-        document.getElementById('pBar').style.width = `${(step + 1) * 10}%`;
+    function showQuestion() {
+        const q = sessionQs[currentIdx];
+        document.getElementById('qCount').innerText = `Question ${currentIdx + 1} of ${sessionQs.length}`;
+        document.getElementById('qContent').innerText = q[1];
+        document.getElementById('pBar').style.width = `${((currentIdx + 1) / sessionQs.length) * 100}%`;
 
+        const grid = document.getElementById('optionGrid');
         grid.innerHTML = "";
         
-        // Dynamic Options Builder (A to D)
         const labels = ['A', 'B', 'C', 'D'];
-        [qData[2], qData[3], qData[4], qData[5]].forEach((text, i) => {
-            if(text && text.toString().trim() !== "") {
+        [q[2], q[3], q[4], q[5]].forEach((txt, i) => {
+            if(txt && txt.toString().trim() !== "") {
                 const opt = document.createElement('div');
                 opt.className = "option-item fade-in";
-                opt.innerHTML = `<div class="opt-id">${labels[i]}</div> <span>${text}</span>`;
+                opt.innerHTML = `<div class="opt-id">${labels[i]}</div> <span>${txt}</span>`;
                 opt.onclick = () => {
                     document.querySelectorAll('.option-item').forEach(el => el.classList.remove('active'));
                     opt.classList.add('active');
-                    opt.dataset.choice = labels[i];
+                    opt.dataset.ans = labels[i];
                 };
                 grid.appendChild(opt);
             }
         });
     }
 
-    // 3. Core Logic: Answer Processing
-    async function submitAnswer() {
+    function nextStep() {
         const selected = document.querySelector('.option-item.active');
-        if(!selected) return alert("Please select an answer to continue!");
+        if(!selected) return alert("Kripya ek option chunein!");
 
-        // Score update
-        if(selected.dataset.choice === sessionQuestions[step][6]) {
-            studentPoints++;
-        }
+        if(selected.dataset.ans === sessionQs[currentIdx][6]) score++;
 
-        step++;
-        if(step < sessionQuestions.length) {
-            loadQuestion();
+        currentIdx++;
+        if(currentIdx < sessionQs.length) {
+            showQuestion();
         } else {
-            finalizeExam();
+            finishExam();
         }
     }
 
-    // 4. Core Logic: Final Result & R07 Cloud Sync
-    async function finalizeExam() {
-        // Full screen blocking loader
+    async function finishExam() {
         document.getElementById('appBody').innerHTML = `
-            <div style="padding:80px 20px; text-align:center;">
-                <i class="fas fa-cloud-upload-alt fa-3x" style="color:var(--primary); margin-bottom:20px;"></i>
-                <h3>Syncing Results...</h3>
+            <div style="padding:100px 20px; text-align:center;">
+                <div class="loader"></div>
+                <h3>Saving Results...</h3>
                 <p>Do not close this window.</p>
             </div>
         `;
 
-        const grade = studentPoints >= 8 ? 'S (EXCELLENT)' : studentPoints >= 6 ? 'A (VERY GOOD)' : 'QUALIFIED';
-        const finalScore = studentPoints + "/10";
-
-        const logData = {
+        const grade = score >= 8 ? "S (Excellent)" : score >= 5 ? "A (Pass)" : "Fail";
+        
+        const payload = {
             type: 'logs',
             action: 'save',
-            row: [
-                new Date().toLocaleString('en-IN'), 
-                activeStudent.name, 
-                activeStudent.phone, 
-                finalScore, 
-                grade, 
-                "Level 1"
-            ]
+            row: [new Date().toLocaleString(), studentInfo.name, studentInfo.phone, `${score}/10`, grade, "Level 1"]
         };
 
         try {
-            // R07 Universal Bridge POST
-            await fetch(API_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                body: JSON.stringify(logData)
-            });
-
-            // Final Professional Result Card
+            await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) });
+            
             document.getElementById('appBody').innerHTML = `
-                <div class="brand-header">
-                    <h1>EXAM RESULT</h1>
-                </div>
+                <div class="brand-header"><h1>EXAM COMPLETED</h1></div>
                 <div class="view-content fade-in" style="text-align:center;">
-                    <div style="font-size:14px; color:#5f6368; margin-bottom:10px;">WELL DONE, ${activeStudent.name}!</div>
-                    <div style="font-size:72px; font-weight:bold; color:var(--dark); line-height:1;">${studentPoints}<span style="font-size:24px; color:#999;">/10</span></div>
-                    <div style="margin:20px 0;">
-                        <span style="background:var(--primary); color:white; padding:8px 25px; border-radius:50px; font-weight:600;">GRADE: ${grade}</span>
-                    </div>
-                    <p style="font-size:13px; color:#666; background:#f1f3f4; padding:15px; border-radius:10px;">
-                        Aapka certificate aur details LRK database mein save ho gayi hain.
+                    <div style="font-size:60px; font-weight:bold; color:var(--dark);">${score}/10</div>
+                    <div style="margin:15px 0;"><span style="background:var(--primary); color:white; padding:8px 20px; border-radius:50px; font-weight:bold;">GRADE: ${grade}</span></div>
+                    <p style="font-size:13px; color:#666; background:#f1f3f4; padding:15px; border-radius:12px;">
+                        Aapka result LRK database mein save ho gaya hai.
                     </p>
-                    <button class="btn-prime" style="margin-top:20px;" onclick="location.reload()">
-                        <i class="fas fa-redo"></i> START NEW SESSION
-                    </button>
+                    <button class="btn-prime" style="margin-top:20px;" onclick="location.reload()">RE-START TEST</button>
                 </div>
             `;
         } catch (e) {
-            alert("Data Sync Failed! Result not saved.");
+            alert("Data Save Failed!");
         }
     }
 </script>
